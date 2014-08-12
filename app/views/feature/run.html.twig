@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "hbw.list.title" | trans }}{% endblock %}
+
+{% block body %}
+
+
+
+<div id="wrapper">
+    <div class="output" id="run-output">
+        <iframe id="output_iframe" src="{{output_url}}">
+    </div>
+</div>
+{% endblock %}
+
+
+{% block javascript %}
+<script type="text/javascript">
+    $(function() {
+
+        var refresh= setinterval(function(){
+            var iframe = document.getElementById('output_iframe');
+            iframe.src = iframe.src;            
+        },5000);
+
+    });
+</script>
+{% endblock %}
+

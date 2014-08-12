@@ -29,6 +29,16 @@ class NotFound implements StateInterface
     }
 
     /**
+     * Get title of the feature the report belongs to
+     *
+     * @return return string
+     */
+    public function getTitle(){
+        return null;
+    }
+
+
+    /**
      * Get content of the report file
      *
      * @return string

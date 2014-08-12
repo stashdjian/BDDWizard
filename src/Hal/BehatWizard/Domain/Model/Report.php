@@ -116,6 +116,17 @@ class Report implements ReportInterface
     }
 
     /**
+     * Get feature title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->state->getTitle();
+    }
+
+
+    /**
      * Get duration
      *
      * @return float

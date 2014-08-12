@@ -1,0 +1,17 @@
+ 
+# Encoding
+AddDefaultCharset utf-8
+ 
+# Gzip
+<ifmodule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/x-javascript application/javascript
+</ifmodule>
+ 
+
+RewriteEngine on
+
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php?sn=$1 [QSA,L]
+#RewriteRule ^([a-zA-Z0-9/%-]+)$ index.php?sn=$1 [QSA]
+Options -Indexes

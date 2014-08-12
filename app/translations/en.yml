@@ -11,6 +11,8 @@ hbw:
     title: My features
     btn:
       new: New feature
+      run: Run tests
+      view: Last logs
     filter:
       text: "Show:"
       state:

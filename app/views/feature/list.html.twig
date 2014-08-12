@@ -7,6 +7,9 @@
 
 <p class="box-act">
     <a class="btn btn-info" href="/edit"><i class="icon-white icon-plus-sign"></i> {{ "hbw.list.btn.new" | trans }}</a>
+    <button id="run-tests-btn" class="btn btn-primary btn-info ladda-button" data-style="expand-left"><i class="icon-white icon-repeat"></i> {{ "hbw.list.btn.run" | trans }}</button>    
+    <a id="view-tests-btn" class="btn btn-info" href="/run_progress" target="_blank"><i class="icon-white icon-eye-open"></i> {{ "hbw.list.btn.view" | trans }}</a>
+
 </p>
 
 <div id="wrapper">
@@ -142,7 +145,28 @@
         });
         $('.feature-show-details').popover();
 
+        $("#run-tests-btn").click(function(){
+            $.ajax("/run_all");
+            var l = Ladda.create(this);
+            l.start();
+            setTimeout(function(){ checkStatus(l);},3000);
+        });
+
+
     });
+    function checkStatus(spin_handler){
+        $.ajax("/run_status").done(function( data ) {
+            if (data=="running"){
+                setTimeout(function(){
+                    checkStatus(spin_handler);
+                },3000);
+            }
+            else{
+                spin_handler.stop();
+                location.reload();                
+            }
+        });        
+    }
 </script>
 {% endblock %}
 

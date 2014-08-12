@@ -229,16 +229,26 @@ hbw.ui.editing = {
         $(hbw.ui.editing.selector.box['stepwhen']).empty();
         $(hbw.ui.editing.selector.box['stepthen']).empty();
 
-        var i, step, type, $target, $model, $clone;
+        var i, step, type, typeGroup, $target, $model, $clone;
         for(i in scenario.steps) {
             step = scenario.steps[i];
             type = step.type.toLowerCase();
+            if (type=="given" || type=="when" || type=="then"){
+                typeGroup=type;
+            }
+            else{
+                type=typeGroup;
+            }
             $target = $(hbw.ui.editing.selector.box['step' + type]);
 
             //
             // Build a clone, copying a model
             $model = $(hbw.ui.editing.selector.models['step' + type]);
             $clone = $model.clone(true);
+            if (step.type.toLowerCase()=="and"){
+                $clone.find('label').html("And");    
+            }
+            
             $('.input-step-' + type, $clone).val(step.text);
             $target.append($clone);
 

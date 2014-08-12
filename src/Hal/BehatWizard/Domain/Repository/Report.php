@@ -51,6 +51,7 @@ class Report implements Repo_ReportInterface
         $reports = array();
 
         foreach ($finder as $file) {
+
             $filename = $file->getRelativePathname();
             $report = new ModelReport(file_get_contents($file->getRealpath()));
             array_push($reports, $report);
@@ -67,9 +68,10 @@ class Report implements Repo_ReportInterface
      */
     public function getReportByFeature(GherkinInterface $feature)
     {
+
         $filename = $feature->getFile();
         foreach ($this->reports as $report) {
-            if ($report->getFile() === $feature->getFile()) {
+            if ($report->getTitle() === $feature->getTitle()) {
                 return $report;
             }
         }

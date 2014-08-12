@@ -6,8 +6,8 @@ $app['debug'] = true;
 
 //
 // configuration
-$app['behat.paths.features'] = getenv('GHERKIN_FEATURES');
-$app['behat.paths.reports'] = getenv('GHERKIN_REPORTS');
+$app['behat.paths.features'] = "/srv/www/cofund/Tests/features";
+$app['behat.paths.reports'] = "/srv/www/cofund/Tests/reports";
 
 //
 // Factory of features
@@ -144,5 +144,45 @@ $app->get('/remove/{feature}', function($feature, \Symfony\Component\HttpFoundat
     $repository->removeFeature($feature);
     return $app->redirect('/');
 });
+
+$app->get('/run_all', function() use($app) {
+
+    exec("/srv/www/cofund/Tests/run_fts > /dev/null &");    
+
+    return "ok";
+});
+
+$app->get('/run_progress', function() use($app) {
+
+    $output_html="";
+    if (is_file("/srv/www/cofund/Tests/output_fts.html")){
+        $output_html=file_get_contents("/srv/www/cofund/Tests/output_fts.html");
+    }
+    else{
+        if (is_file("/srv/www/cofund/Tests/output_fts_proc.html")){
+            $output_html=file_get_contents("/srv/www/cofund/Tests/output_fts_proc.html");   
+        }
+    }
+
+    return $output_html;
+
+});
+
+$app->get('/run_status', function() use($app) {
+
+    $output_html="";
+    if (is_file("/srv/www/cofund/Tests/output_fts.html")){
+        $output_html="done";
+    }
+    else{
+        if (is_file("/srv/www/cofund/Tests/output_fts_proc.html")){
+            $output_html="running";   
+        }
+    }
+
+    return $output_html;
+
+});
+
 
 $app->run();

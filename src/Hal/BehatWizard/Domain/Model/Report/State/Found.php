@@ -61,6 +61,15 @@ class Found implements StateInterface
     }
 
     /**
+     * Get title of the feature the report belongs to
+     *
+     * @return return string
+     */
+    public function getTitle(){
+        return (string) $this->xml['name'];
+    }
+
+    /**
      * Get content of the report file
      *
      * @return return string
