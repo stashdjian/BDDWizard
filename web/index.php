@@ -8,6 +8,7 @@ $app['debug'] = true;
 // configuration
 $app['behat.paths.features'] = "/srv/www/cofund/Tests/features";
 $app['behat.paths.reports'] = "/srv/www/cofund/Tests/reports";
+$app['behat.paths.requests'] = "/srv/www/cofund/Tests/requests";
 
 //
 // Factory of features
@@ -147,7 +148,8 @@ $app->get('/remove/{feature}', function($feature, \Symfony\Component\HttpFoundat
 
 $app->get('/run_all', function() use($app) {
 
-    exec("/srv/www/cofund/Tests/run_fts > /dev/null &");    
+    $file= $app['behat.paths.requests'].'/'.time().'.req';
+    file_put_contents($file, "Request from wizard");
 
     return "ok";
 });
